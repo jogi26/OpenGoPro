@@ -60,6 +60,7 @@ async def connect_ble(notification_handler: noti_handler_T, identifier: str | No
                 # Add to the dict if not unknown
                 if device.name and device.name != "Unknown":
                     devices[device.name] = device
+                #print(f"DEBUG: Found {device.name} with ID {device.address}")
 
             # Scan until we find devices
             matched_devices: list[BleakDevice] = []
@@ -72,7 +73,7 @@ async def connect_ble(notification_handler: noti_handler_T, identifier: str | No
                 for d in devices:
                     logger.info(f"\tDiscovered: {d}")
                 # Now look for our matching device(s)
-                token = re.compile(identifier or r"GoPro [A-Z0-9]{4}")
+                token = re.compile(rf"GoPro {identifier}" if identifier else r"GoPro [A-Z0-9]{4}")
                 matched_devices = [device for name, device in devices.items() if token.match(name)]
                 logger.info(f"Found {len(matched_devices)} matching devices.")
 

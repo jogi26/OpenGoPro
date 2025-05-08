@@ -78,7 +78,7 @@ async def main(identifier: str | None) -> None:
     await client.write_gatt_char(request_uuid.value, request, response=True)
     await event.wait()  # Wait to receive the notification response
 
-    await asyncio.sleep(2)  # If we're recording, let's wait 2 seconds (i.e. take a 2 second video)
+    await asyncio.sleep(10)  # If we're recording, let's wait 2 seconds (i.e. take a 2 second video)
     # Write to command request BleUUID to turn the shutter off
     logger.info("Setting the shutter off")
     request = bytes([3, 1, 1, 0])
